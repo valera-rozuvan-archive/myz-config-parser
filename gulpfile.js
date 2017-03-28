@@ -1,9 +1,9 @@
 'use strict';
 
-var gulp = require('gulp');
-var mocha = require('gulp-mocha');
-var eslint = require('gulp-eslint');
-var argv = require('yargs').argv;
+var gulp = require('gulp'),
+  mocha = require('gulp-mocha'),
+  eslint = require('gulp-eslint'),
+  argv = require('yargs').argv;
 
 gulp.task('test', function (cb) {
   var watch = false;

@@ -1,13 +1,15 @@
 'use strict';
 
-var chai = require('chai');
-var sinon = require('sinon');
-var sinonChai = require('sinon-chai');
-var chaiAsPromised = require('chai-as-promised');
+var path = require('path'),
+  chai = require('chai'),
+  sinon = require('sinon'),
+  sinonChai = require('sinon-chai'),
+  chaiAsPromised = require('chai-as-promised'),
 
-var mainModule = require('../lib/main');
+  mainModule = require('../lib/main'),
 
-var expect = chai.expect;
+  expect = chai.expect,
+  assert = chai.assert;
 
 chai.should();
 chai.use(sinonChai);
@@ -34,22 +36,111 @@ describe('main module', function () {
     retVal = null;
   });
 
-  it('parse returns a promise object', function () {
-    retVal = mainModule.parse();
+  describe('config file path is undefined', function () {
+    beforeEach(function () {
+      retVal = mainModule.parse();
+    });
 
-    expect(retVal).to.be.an('object');
-    expect(retVal.then).to.be.an('function');
+    it('parse returns a promise object', function () {
+      expect(retVal).to.be.an('object');
+      expect(retVal.then).to.be.an('function');
+    });
+
+    describe('parse promise is rejected', function () {
+      it('error object is returned', function () {
+        return retVal.should.be.rejectedWith(Error);
+      });
+
+      it('correct error message is returned', function () {
+        return assert.isRejected(retVal, /^file path is undefined$/);
+      });
+    });
   });
 
-  it('parse promise is rejected if config file is undefined', function () {
-    retVal = mainModule.parse();
+  describe('config file path is not a string', function () {
+    beforeEach(function () {
+      retVal = mainModule.parse({a: 42});
+    });
 
-    return retVal.should.be.rejected;
+    it('parse returns a promise object', function () {
+      expect(retVal).to.be.an('object');
+      expect(retVal.then).to.be.an('function');
+    });
+
+    describe('parse promise is rejected', function () {
+      it('error object is returned', function () {
+        return retVal.should.be.rejectedWith(Error);
+      });
+
+      it('correct error message is returned', function () {
+        return assert.isRejected(retVal, /^file path is not a string$/);
+      });
+    });
   });
 
-  it('parse promise is resolved if config file is defined', function () {
-    retVal = mainModule.parse('some text');
+  describe('config file does not exist', function () {
+    beforeEach(function () {
+      var testConfigFile = path.join(__dirname, 'wrong_file_test_config.json');
 
-    return retVal.should.be.fulfilled;
+      retVal = mainModule.parse(testConfigFile);
+    });
+
+    it('parse returns a promise object', function () {
+      expect(retVal).to.be.an('object');
+      expect(retVal.then).to.be.an('function');
+    });
+
+    describe('parse promise is rejected', function () {
+      it('error object is returned', function () {
+        return retVal.should.be.rejectedWith(Error);
+      });
+
+      it('correct error message is returned', function () {
+        return assert.isRejected(retVal, /no such file or directory/);
+      });
+    });
+  });
+
+
+  describe('config file contains invalid json', function () {
+    beforeEach(function () {
+      var testConfigFile = path.join(__dirname, 'bad_json_test_config.json');
+
+      retVal = mainModule.parse(testConfigFile);
+    });
+
+    it('parse returns a promise object', function () {
+      expect(retVal).to.be.an('object');
+      expect(retVal.then).to.be.an('function');
+    });
+
+    describe('parse promise is rejected', function () {
+      it('error object is returned', function () {
+        return retVal.should.be.rejectedWith(Error);
+      });
+
+      it('correct error message is returned', function () {
+        return assert.isRejected(retVal, /Unexpected token .* in JSON at position/);
+      });
+    });
+  });
+
+  describe('config file exists and contains a valid JSON', function () {
+    beforeEach(function () {
+      var testConfigFile = path.join(__dirname, 'valid_test_config.json');
+
+      retVal = mainModule.parse(testConfigFile);
+    });
+
+    it('parse returns a promise object', function () {
+      expect(retVal).to.be.an('object');
+      expect(retVal.then).to.be.an('function');
+    });
+
+    it('parse promise is resolved with correct value', function (done) {
+      retVal
+        .should.eventually.deep.equal({message: 'Hello, world!'})
+        .notify(done);
+    });
   });
 });
