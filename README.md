@@ -1,5 +1,7 @@
 # myz-config-parser
 
+[![Build Status](https://travis-ci.org/myuzu-net/myz-config-parser.svg?branch=master)](https://travis-ci.org/myuzu-net/myz-config-parser)
+
 myuzu config parser
 
 ## Description
