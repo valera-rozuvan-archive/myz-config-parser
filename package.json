@@ -21,6 +21,7 @@
   "homepage": "https://github.com/myuzu-net/myz-config-parser#readme",
   "devDependencies": {
     "chai": "3.5.0",
+    "chai-as-promised": "6.0.0",
     "gulp": "3.9.1",
     "gulp-eslint": "3.0.1",
     "gulp-mocha": "4.1.0",
@@ -29,5 +30,7 @@
     "sinon-chai": "2.9.0",
     "yargs": "7.0.2"
   },
-  "dependencies": {}
+  "dependencies": {
+    "q": "1.5.0"
+  }
 }

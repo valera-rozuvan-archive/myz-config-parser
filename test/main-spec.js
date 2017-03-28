@@ -3,6 +3,7 @@
 var chai = require('chai');
 var sinon = require('sinon');
 var sinonChai = require('sinon-chai');
+var chaiAsPromised = require('chai-as-promised');
 
 var mainModule = require('../lib/main');
 
@@ -10,6 +11,7 @@ var expect = chai.expect;
 
 chai.should();
 chai.use(sinonChai);
+chai.use(chaiAsPromised);
 
 function hello(name, cb) {
   cb('hello ' + name);
@@ -32,15 +34,22 @@ describe('main module', function () {
     retVal = null;
   });
 
-  it('parse returns correct object', function () {
+  it('parse returns a promise object', function () {
     retVal = mainModule.parse();
 
     expect(retVal).to.be.an('object');
+    expect(retVal.then).to.be.an('function');
   });
 
-  it('parse returns an object with correct "a" property', function () {
+  it('parse promise is rejected if config file is undefined', function () {
     retVal = mainModule.parse();
 
-    expect(retVal.a).to.equal(42);
+    return retVal.should.be.rejected;
+  });
+
+  it('parse promise is resolved if config file is defined', function () {
+    retVal = mainModule.parse('some text');
+
+    return retVal.should.be.fulfilled;
   });
 });
