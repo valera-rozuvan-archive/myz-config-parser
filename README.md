@@ -1,6 +1,7 @@
 # myz-config-parser
 
 [![Build Status](https://travis-ci.org/myuzu-net/myz-config-parser.svg?branch=master)](https://travis-ci.org/myuzu-net/myz-config-parser)
+[![Coverage Status](https://coveralls.io/repos/github/myuzu-net/myz-config-parser/badge.svg)](https://coveralls.io/github/myuzu-net/myz-config-parser)
 
 myuzu config parser
 
