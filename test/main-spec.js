@@ -29,7 +29,7 @@ describe('hello', function () {
   });
 });
 
-describe('main module', function () {
+describe('main module without pages', function () {
   var retVal;
 
   beforeEach(function () {
