@@ -6,7 +6,7 @@ var path = require('path'),
   sinonChai = require('sinon-chai'),
   chaiAsPromised = require('chai-as-promised'),
 
-  mainModule = require('../lib/main'),
+  mainModule = require('../index'),
 
   expect = chai.expect,
   assert = chai.assert;
