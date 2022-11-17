@@ -1,5 +1,11 @@
 # myz-config-parser
 
+## wip has moved
+
+Future work on this repository has moved to the monorepo [valera-rozuvan/experiments](https://github.com/valera-rozuvan/experiments). This repo is archived for historic purposes (to preserve commit history). Navigate over to [experiments/myz-config-parser](https://github.com/valera-rozuvan/experiments/tree/main/myz-config-parser) to see updates (if any).
+
+## introduction
+
 [![Build Status](https://travis-ci.org/myuzu-net/myz-config-parser.svg?branch=master)](https://travis-ci.org/myuzu-net/myz-config-parser)
 [![Windows Build Status](https://ci.appveyor.com/api/projects/status/1qptb432evmkrrol?svg=true)](https://ci.appveyor.com/project/valera-rozuvan/myz-config-parser)
 [![Coverage Status](https://coveralls.io/repos/github/myuzu-net/myz-config-parser/badge.svg)](https://coveralls.io/github/myuzu-net/myz-config-parser)
